@@ -16,7 +16,7 @@
             var $el = $(el);
             var cs = getComputedStyle(el);
             plugin.fakeEl.text(el.value || el.innerText || el.placeholder).css('font', $el.css('font'));
-            $el.css('width', plugin.fakeEl.width() + parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight));
+            $el.css('width', plugin.fakeEl.width() + parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight) + 1);
         }
 
         return this.each(function (i, el) {
