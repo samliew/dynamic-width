@@ -8,7 +8,13 @@
  
 (function($) {
 
-    $.fn.dynamicWidth = function () {
+    var params = {
+         additionalPadding: 5
+    };
+
+    $.fn.dynamicWidth = function (opts) {
+        $.extend(params, opts);
+
         var plugin = $.fn.dynamicWidth;
         if (!plugin.fakeEl) plugin.fakeEl = $('<span>').hide().appendTo(document.body);
 
@@ -16,7 +22,7 @@
             var $el = $(el);
             var cs = getComputedStyle(el);
             plugin.fakeEl.text(el.value || el.innerText || el.placeholder).css('font', $el.css('font'));
-            $el.css('width', plugin.fakeEl.width() + parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight) + 1);
+            $el.css('width', plugin.fakeEl.width() + parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight) + params.additionalPadding);
         }
 
         return this.each(function (i, el) {
