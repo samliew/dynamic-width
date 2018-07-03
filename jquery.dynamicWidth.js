@@ -8,21 +8,24 @@
  
 (function($) {
 
-    var params = {
+    const params = {
+         minWidth: 0,
          additionalPadding: 5
     };
 
     $.fn.dynamicWidth = function (opts) {
         $.extend(params, opts);
 
-        var plugin = $.fn.dynamicWidth;
+        const plugin = $.fn.dynamicWidth;
         if (!plugin.fakeEl) plugin.fakeEl = $('<span>').hide().appendTo(document.body);
 
         function sizeToContent (el) {
-            var $el = $(el);
-            var cs = getComputedStyle(el);
+            const $el = $(el);
+            const cs = getComputedStyle(el);
             plugin.fakeEl.text(el.value || el.innerText || el.placeholder).css('font', $el.css('font'));
-            $el.css('width', plugin.fakeEl.width() + parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight) + params.additionalPadding);
+            const elemPadding = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
+            const newWidth = plugin.fakeEl.width() + elemPadding + params.additionalPadding;
+            $el.css('width', newWidth > params.minWidth ? newWidth : params.minWidth);
         }
 
         return this.each(function (i, el) {
